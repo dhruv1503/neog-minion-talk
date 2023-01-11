@@ -13,12 +13,10 @@ const createURL = (input) => {
     return url;
 }
 
-async function fetchApi(url){
+  async function fetchApi(url){
     try{
     const response = await fetch(url)
-    console.log(response);
     const data = await response.json();
-    console.log(data)
     return data.contents.translated
     }
     catch(error){
@@ -32,11 +30,13 @@ const addTextToOutputContainer = (text) => {
     outputContainer.textContent = text;
 }
 
-const buttonHandler = (input) => {
+const buttonHandler = async(input) => {
      
-    const data = fetchApi(createURL(input));
-    if(typeof(data)== String){
-    outputContainer.innerText = data
+    const data = await fetchApi(createURL(input));
+    console.log(data)
+
+    if(typeof(data) == String){
+    addTextToOutputContainer(data);
     }
     else{
         window.alert("Something went wrong!! Please try after sometime");
